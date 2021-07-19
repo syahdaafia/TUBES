@@ -10,9 +10,30 @@
 #ifndef VETSERVICE_H
 #define VETSERVICE_H
 
+/* Atribut ADT */
+/*=============================================================*/
+typedef struct NodeQueue *addrNQ;
+typedef struct InfoPelangganVetService infotype;
 
+typedef struct InfoPelangganVetService{
+	char nama[50];
+	char penyakit[50];
+	int WDatang;
+	int WTunggu;
+	int WMulai;
+	int WService;
+	int WSelesai;
+} InfoPelangganVetService;
 
+typedef struct NodeQueue{
+	infotype info;
+	addrNQ next;	
+} NodeQueue;
 
+typedef struct Queue{
+	addrNQ front;
+	addrNQ rear;
+}Queue;
 
 
 
