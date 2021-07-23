@@ -1,0 +1,28 @@
+	==============================================================================================================================================
+	+																 	     +
+	+	How To Use Program Aplikasi Layanan Dokter Hewan										     +
+	+																	     +
+	==============================================================================================================================================
+	+																	     +
+	+	Pada Proggram ini user bisa memilih login sebagai pelanggan ataupun dokter.						 	     +
+	+																	     +
+	+	A. Login sebagai pelanggan													     +
+	+   	   1. Pendaftaran														     +
+	+      	      -Pendaftaran bisa dipilih jika user mendaftar layanan dokter hewan.							     +
+	+             -User harus menginputkan 4 hal, yaitu nama hewan, waktu datang, jumlah penyakit, dan Penyakit yang dialami.		     +
+	+             -ada 3 kondisi penyakit:  Ringan	: Penyakit kulit, luka ringan, bersin.							     +
+	+			      		Sedang	: Cacingan, diare, luka dalam.								     +
+	+			      	 	Berat	: Gangguan kerongkongan, kuning, terkena virus.						     +
+	+     	      -User bisa memilih lebih dari satu penyakit dengan catatan penyakit yang diinputkan berada dalam satu kategori.		     +
+	+   																	     +
+	+	   2. Lihat Antrian														     +
+	+             User dapat memilih menu ini jika ingin melihat antrian yang sudah diurutkan.						     +
+	+																	     +
+	+	B. Login sebagan dokter														     +
+	+   	   1. Lihat Antrian														     +
+	+      	      User dapat memilih menu ini jika ingin melihat antrian yang sudah diurutkan						     +
+	+   	   2. Panggil Antrian														     +
+	+      	      User dapat memanggil antrian yang akan diproses. Setiap kali pelanggan selesai dilayani, maka pelanggan tersebut dihapus       +	 
+	+      	      dari antrian dan menampilkan kembali urutan antrian dengan informasi yang sama ketika terjadi penambahan antrian.		     +
+	+																	     +
+	==============================================================================================================================================	
