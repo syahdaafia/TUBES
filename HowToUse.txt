@@ -1,6 +1,7 @@
-<<<<<<< HEAD
 =========================================================================================
-||                                       How To Use                                    ||
+||                           APLIKASI LAYANAN DOKTER HEWAN                             ||
+|| 			       --     How To Use	--	                       || 
+|| 										       || 
 =========================================================================================
 ||Pada Proggram ini user bisa memilih login sebagai pelanggan ataupun dokter.	       ||
 ||A. Login sebagai pelanggan							       ||
