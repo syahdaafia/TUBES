@@ -4,8 +4,6 @@
 			         |      HOW TO USE       |
 				 |====               ====|
 	              		     <<===\(o_o)/===>>   
-                                               
-
 
 =========================================================================================
 ||Pada Proggram ini user bisa memilih login sebagai pelanggan ataupun dokter.	       ||

@@ -275,12 +275,35 @@ void PrintAntrian (Queue Q){
 */
  char* KategoriPenyakit (addrNQ New){
  	toUpperStr(New->info.kategori);
+ 	
  	char *sent = New->info.kategori;
-	char *word = "PENYAKIT KULIT";
-	char *pch = strstr(sent, word);
+	char *kulit = "PENYAKIT KULIT";
+	char *satu = strstr(sent, kulit);
+	char *bersin = "BERSIN";
+	char *dua = strstr(sent, bersin);
+	char *lukaR = "LUKA RINGAN";
+	char *tiga = strstr(sent, lukaR);
+	
+	char *cacingan = "CACINGAN";
+	char *empat = strstr(sent, cacingan);
+	char *diare = "DIARE";
+	char *lima = strstr(sent, diare);
+	char *lukaD = "LUKA DALAM";
+	char *enam = strstr(sent, lukaD);
+	
+	char *gangguan = "GANGGUAN KERONGKONGAN";
+	char *tujuh = strstr(sent, gangguan);
+	char *virus = "TERKENA VIRUS";
+	char *delapan = strstr(sent, virus);
+	char *kuning = "KUNING";
+	char *sembilan = strstr(sent, kuning);
 
-	if(pch){
+	if(satu || dua || tiga){
 		return "Ringan";
+	} else if (empat || lima || enam){
+		return "Sedang";
+	} else if (tujuh || delapan || sembilan){
+		return ("Berat");
 	}
 }
 
@@ -288,11 +311,11 @@ void PrintAntrian (Queue Q){
    parameter prioritas.
 */
 int Prioritas (int JumlahPenyakit, char* Kategori){
-	if(Kategori=="Ringan" && JumlahPenyakit==3){
+	if(Kategori=="Ringan" && JumlahPenyakit>=3){
 		return 2;
-	}else if (Kategori=="Sedang" && JumlahPenyakit==2){
+	}else if (Kategori=="Sedang" && JumlahPenyakit>=2){
 		return 3;
-	}else if (Kategori=="Berat"){
+	}else if (Kategori=="Berat" && JumlahPenyakit>=1){
 		return 4;
 	}else return 1;
 }
