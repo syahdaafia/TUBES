@@ -16,10 +16,17 @@
 /*========================================*/
 typedef struct NodeQueue *addrNQ;
 typedef struct InfoPelangganVetService infotype;
+typedef struct Penyakit Sakit;
+
+typedef struct Penyakit {
+	char penyakit1[20]; 
+	char penyakit2[20]; 
+	char penyakit3[20]; 
+}Penyakit;
 
 typedef struct InfoPelangganVetService{
-	char* nama;
-	char penyakit[50];
+	char nama[20];
+	Sakit penyakit;
 	char* kategori;
 	int jumlahPenyakit;
 	int prioritas;
@@ -29,6 +36,7 @@ typedef struct InfoPelangganVetService{
 	int WService;
 	int WSelesai;
 } InfoPelangganVetService;
+
 
 typedef struct NodeQueue{
 	infotype info;
@@ -87,7 +95,7 @@ void MulaiService (Queue *Q, infotype *data);
 /* Menghitung waktu service sesuai dengan kategori penyakit.
    if penyakit ... return ...
 */
-int HitungWaktuService (char* data);
+int HitungWaktuService (char data[]);
 
 /* Menghitung waktu selesai layanan. 
    Mengembalikan hasil dari WDatang + WTunggu + WService.
@@ -97,31 +105,33 @@ int HitungWaktuSelesai (infotype data);
 /* Menghitung waktu tunggu layanan.
    Mengembalikan hasil dari WSelesai (Node sebelumnya)- WDaftar.
 */
-int HitungWaktuTunggu ();
+int HitungWaktuTunggu1(addrNQ P, int WDaftar);
+
+int HitungWaktuTunggu2 (addrNQ P, int WDaftar);
 
 /* Menghitung waktu tunggu layanan .
    Mengembalikan hasil dari WDatang + WTunggu.
 */
-int HitungWaktuMulai (infotype data);
+int HitungWaktuMulai (addrNQ P, int WDaftar);
 
 /*** MANAJEMEN MENU NAVIGASI ***/
 /* Menampilkan menu login.
    I.S. Layar kosong.
    F.S. Tampilan main menu.
 */ 
-void MenuLogin ();
+void MenuLogin (Queue Q);
 
 /* Menampilkan menu pelanggan.
    I.S. Layar kosong.
    F.S. Tampilan menu pelanggan.
 */ 
-void MenuPelanggan ();
+void MenuPelanggan (Queue Q);
 
 /* Menampilkan menu dokter.
    I.S. Layar kosong.
    F.S. Tampilan menu dokter.
 */ 
-void MenuDokter();
+void MenuDokter(Queue Q);
 
 /*** MANAJEMEN FITUR ***/
 /* Memasukkan info pelanggan vet service.
@@ -129,6 +139,8 @@ void MenuDokter();
    F.S. info pelanggan vet service sudah terisi.
 */ 
 void DaftarAntrian (Queue *Q);
+
+void InputPenyakit (int JmlPenyakit, infotype *x);
 
 /* Menampilkan info pelanggan vet service.
    I.S. info pelanggan vet service belum ditampilkan.
@@ -139,24 +151,24 @@ void PrintAntrian (Queue Q);
 /* Mengembalikan kategori penyakit dari 
    penyakit-penyakit yang diinputkan.
 */
-char* KategoriPenyakit (addrNQ New);
+char* KategoriPenyakit (Sakit skt);
 
 /* Mengembalikan nilai prioritas berdasarkan 
    parameter prioritas.
 */
-int Prioritas (int JumlahPenyakit, char* Kategori);
+int Prioritas (int JumlahPenyakit, char Kategori[]);
 
 /* Megurutkan daftar antrian sesuai waktu dan prioritas
    I.S. Antrian belum terurut.
    F.S. Antrian sudah terurut.
 */
-void UrutAntrian ();
+void UrutAntrian (Queue *Q, infotype Info);
 
 /* Menukar urutan antrian apabila ada antrian yang diprioritaskan
    I.S. Antrian belum ditukar.
    F.S. Antrian sudah ditukar.
 */
-void TukarAntrian (Queue *Q, addrNQ Nu, addrNQ ex);
+void TukarAntrian (Queue *Q, infotype Info, addrNQ NU, addrNQ ex);
 
 /* Menampilkan tata cara penggunaan aplikasi.
    I.S. Layar kosong.
@@ -164,9 +176,4 @@ void TukarAntrian (Queue *Q, addrNQ Nu, addrNQ ex);
 */
 void HowToUse ();
 
-/* Mengubah semua huruf menjadi kapital.
-   I.S. huruf bisa jadi kecil bisa jadi kapital.
-   F.S. huruf kapital semua.
-*/
-void toUpperStr(char str[]);
 #endif

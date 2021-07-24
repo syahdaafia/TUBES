@@ -10,10 +10,14 @@
 
 #include "VetService.h"
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 int main (){
 	system ("cls");
+	Queue Q;
 	
+	BuatAntrian(&Q);
 	int choice;
 	do {
 		printf ("=======================================\n");
@@ -26,12 +30,13 @@ int main (){
 		printf ("Pilihan Anda : "); scanf("%d", &choice);
 		
 		switch (choice){
-		case 1 : MenuLogin(); break;
+		case 1 : MenuLogin(Q); break;
 		case 2 : HowToUse(); break;
-		case 3 : break;
+		case 3 : exit(0);
 		default: printf("Wrong input menu, please try again . . .\n"); break;
 		}
 		system("pause");
+		system ("cls");
 	} while (choice!=3);
 	return 0;
 }
