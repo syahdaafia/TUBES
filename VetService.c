@@ -161,15 +161,14 @@ void MenuLogin (Queue Q){
 	
 	do {
 	system ("cls");
-	printf ("=======================================\n");
-	printf ("      APLIKASI LAYANAN DOKTER HEWAN    \n");
-	printf ("              --LOGIN--                \n");
-	printf ("=======================================\n");
-	printf ("Login sebagain :\n");
-	printf ("1. Pelanggan\n");
-	printf ("2. Dokter\n\n");
-	printf ("Pilihan Anda : "); scanf("%d", &choice);
-	
+	printf ("||=======================================||\n");
+	printf ("||      APLIKASI LAYANAN DOKTER HEWAN    ||\n");
+	printf ("||              --LOGIN--                ||\n");
+	printf ("||=======================================||\n");
+	printf ("||Login sebagain :                       ||\n");
+	printf ("||1. Pelanggan                           ||\n");
+	printf ("||2. Dokter                              ||\n||                                       ||\n");
+	printf ("||Pilihan Anda :"); scanf("%d", &choice);
 	switch (choice){
 		case 1 : MenuPelanggan(Q); break;
 		case 2 : MenuDokter(Q); break;

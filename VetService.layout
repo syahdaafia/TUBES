@@ -1,7 +1,7 @@
 [Editor_0]
 CursorCol=6
 CursorRow=22
-TopLine=26
+TopLine=11
 LeftChar=1
 [Editors]
 Order=2,1,0
@@ -14,8 +14,8 @@ LeftChar=1
 [Editor_1]
 <<<<<<< Updated upstream
 CursorCol=52
-CursorRow=418
-TopLine=94
+CursorRow=171
+TopLine=148
 =======
 CursorCol=17
 CursorRow=331
