@@ -397,8 +397,10 @@ void UrutAntrian (Queue *Q, infotype Info){
 			} else x = (*x).next;
 		} else if (Info.prioritas == x->info.prioritas){
 			if (Info.WDatang < x->info.WMulai){
-				TukarAntrian (Q, New, x);
-				swap=1;
+				if (Info.WDatang < x->info.WDatang){
+					TukarAntrian (Q, New, x);
+					swap=1;	
+				} else x = (*x).next;
 			} else x = (*x).next;
 		} else x=(*x).next;
 	}
