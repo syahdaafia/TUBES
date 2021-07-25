@@ -41,6 +41,7 @@ void Dealokasi (addrNQ *P){
 	free(*P);
 }
 
+
 /*** Manajemen Queue ***/
 /* Membuat sebuah Queue kosong dengan Q.fornt = NULL dan Q.rear = NULL. 
    I.S. Belum terbentuk Queue 
@@ -97,6 +98,7 @@ void MulaiService (Queue *Q, infotype *data){
 	}
 }
 
+
 /*** MANAJEMEN WAKTU ***/
 /* Menghitung waktu service.
    Mengembalikan waktu service sesuai dengan kategori penyakit.
@@ -118,8 +120,8 @@ int HitungWaktuSelesai (infotype data){
 	return data.WDatang + data.WTunggu + data.WService;
 }
 
-/* Menghitung waktu tunggu layanan.
-   Mengembalikan hasil dari WSelesai (Node sebelumnya)- WDaftar.
+/* Menghitung waktu tunggu layanan apabila tidak ada pertukaran antrian.
+   Mengembalikan hasil dari WSelesai (rear)- WDaftar.
 */
 int HitungWaktuTunggu1(addrNQ P, int WDaftar){
 	if(P == NULL){
@@ -131,18 +133,20 @@ int HitungWaktuTunggu1(addrNQ P, int WDaftar){
 		}
 }
 
+/* Menghitung waktu tunggu layanan apabila ada pertukaran antrian.
+   Mengembalikan hasil dari WSelesai (Node sebelumnya)- WDaftar.
+*/
 int HitungWaktuTunggu2 (addrNQ P, int WDaftar){
 	if (WDaftar < P->info.WSelesai){
 		return P->info.WSelesai-WDaftar;
 	}else return 0;
-	
 }
 
-/* Menghitung waktu tunggu layanan .
+/* Menghitung waktu tunggu layanan.
    Mengembalikan hasil dari WDatang + WTunggu.
 */
 int HitungWaktuMulai (addrNQ P, int WDaftar){
-	if(P == NULL){
+	if(P == NULL || WDaftar > P->info.WSelesai){
 		return WDaftar;
 	}else return P->info.WSelesai;
 }
@@ -262,6 +266,10 @@ void DaftarAntrian (Queue *Q){
 	UrutAntrian(Q,Info);
 }
 
+/* Memasukkan info penyakit dari hewan sesuai jumlah penyakit.
+   I.S. info penyakit masih kosong.
+   F.S. info penyakit sudah terisi.
+*/ 
 void InputPenyakit (int JmlPenyakit, infotype *x){
 	Sakit sakit;
 	
@@ -301,9 +309,11 @@ void PrintAntrian (Queue Q){
 		printf ("Antrian Masih Kosong\n\n");
 	}
 	while (temp!=NULL){
-		printf("%d\n", ++i);
+		printf("%d\n", ++i); //print nomor antrian
 		printf ("Nama Hewan		: %s\n", temp->info.nama);
 		printf ("Waktu Kedatangan	: %d\n", temp->info.WDatang);
+		
+		//print penyakit sesuai jumlah penyakit
 		if (temp->info.jumlahPenyakit==3){
 			printf ("Penyakit		: %s - %s - %s\n", temp->info.penyakit.penyakit1, 
 			temp->info.penyakit.penyakit2, temp->info.penyakit.penyakit3);
@@ -313,6 +323,7 @@ void PrintAntrian (Queue Q){
 		} else if (temp->info.jumlahPenyakit==1){
 				printf ("Penyakit		: %s\n", temp->info.penyakit.penyakit1);
 		}
+		
 		printf ("Kategori Penyakit	: %s\n", temp->info.kategori);
 		printf ("Waktu Pelayanan		: %d\n", temp->info.WService);
 		printf ("Waktu Tunggu		: %d\n", temp->info.WTunggu);
@@ -378,15 +389,15 @@ void UrutAntrian (Queue *Q, infotype Info){
 	New = Alokasi(Info);
 	x = (*Q).front;
 	
-	while (x != NULL && swap != 1){
+	while (x != NULL && swap != 1){ 
 		if (Info.prioritas > x->info.prioritas){
 			if (Info.WDatang < x->info.WMulai){
-				TukarAntrian (Q, Info, New, x);
+				TukarAntrian (Q, New, x);
 				swap=1;
 			} else x = (*x).next;
 		} else if (Info.prioritas == x->info.prioritas){
 			if (Info.WDatang < x->info.WMulai){
-				TukarAntrian (Q, Info, New, x);
+				TukarAntrian (Q, New, x);
 				swap=1;
 			} else x = (*x).next;
 		} else x=(*x).next;
@@ -404,7 +415,7 @@ void UrutAntrian (Queue *Q, infotype Info){
    I.S. Antrian belum ditukar.
    F.S. Antrian sudah ditukar.
 */
-void TukarAntrian (Queue *Q, infotype Info, addrNQ Nu, addrNQ ex){
+void TukarAntrian (Queue *Q, addrNQ Nu, addrNQ ex){
 	addrNQ temp;
 	int done;
 	
@@ -420,7 +431,6 @@ void TukarAntrian (Queue *Q, infotype Info, addrNQ Nu, addrNQ ex){
 		(*temp).next = Nu;
 		(*Nu).next= ex;	
 	} 
-	
 
 	while (Nu != NULL ){
 		if (Nu==(*Q).front && done !=1){

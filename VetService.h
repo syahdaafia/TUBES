@@ -16,13 +16,13 @@
 /*========================================*/
 typedef struct NodeQueue *addrNQ;
 typedef struct InfoPelangganVetService infotype;
-typedef struct Penyakit Sakit;
+typedef struct InfoPenyakit Sakit;
 
-typedef struct Penyakit {
+typedef struct InfoPenyakit {
 	char penyakit1[20]; 
 	char penyakit2[20]; 
 	char penyakit3[20]; 
-}Penyakit;
+}InfoPenyakit;
 
 typedef struct InfoPelangganVetService{
 	char nama[20];
@@ -37,16 +37,16 @@ typedef struct InfoPelangganVetService{
 	int WSelesai;
 } InfoPelangganVetService;
 
-
 typedef struct NodeQueue{
 	infotype info;
 	addrNQ next;	
 } NodeQueue;
 
 typedef struct Queue{
-	addrNQ front;
-	addrNQ rear;
+	addrNQ front;  //menandai antrian depan
+	addrNQ rear; //menandai antrian belakang
 }Queue;
+
 
 		   	/* Operasi ADT */
 /*========================================*/
@@ -60,10 +60,11 @@ typedef struct Queue{
 addrNQ Alokasi (infotype X);
 
 /* Melakukan dealokasi elemen P (pointer menunjuk ke alamat node queue).
-   I.S.: P terdefinisi.
-   F.S.: P dikembalikan ke sistem.
+   I.S. P terdefinisi.
+   F.S. P dikembalikan ke sistem.
  */
 void Dealokasi (addrNQ *P);
+
 
 /*** Manajemen Queue ***/
 /* Membuat sebuah Queue kosong dengan Q.fornt = NULL dan Q.rear = NULL. 
@@ -93,7 +94,7 @@ void MulaiService (Queue *Q, infotype *data);
 
 /*** MANAJEMEN WAKTU ***/
 /* Menghitung waktu service sesuai dengan kategori penyakit.
-   if penyakit ... return ...
+    Mengembalikan waktu service sesuai dengan kategori penyakit.
 */
 int HitungWaktuService (char data[]);
 
@@ -102,17 +103,21 @@ int HitungWaktuService (char data[]);
 */
 int HitungWaktuSelesai (infotype data);
 
-/* Menghitung waktu tunggu layanan.
-   Mengembalikan hasil dari WSelesai (Node sebelumnya)- WDaftar.
+/* Menghitung waktu tunggu layanan apabila tidak ada pertukaran antrian.
+   Mengembalikan hasil dari WSelesai (rear)- WDaftar.
 */
 int HitungWaktuTunggu1(addrNQ P, int WDaftar);
 
+/* Menghitung waktu tunggu layanan apabila ada pertukaran antrian.
+   Mengembalikan hasil dari WSelesai (Node sebelumnya)- WDaftar.
+*/
 int HitungWaktuTunggu2 (addrNQ P, int WDaftar);
 
 /* Menghitung waktu tunggu layanan .
-   Mengembalikan hasil dari WDatang + WTunggu.
+   Mengembalikan hasil dari WSelesai antrian sebelumnya.
 */
 int HitungWaktuMulai (addrNQ P, int WDaftar);
+
 
 /*** MANAJEMEN MENU NAVIGASI ***/
 /* Menampilkan menu login.
@@ -133,6 +138,7 @@ void MenuPelanggan (Queue Q);
 */ 
 void MenuDokter(Queue Q);
 
+
 /*** MANAJEMEN FITUR ***/
 /* Memasukkan info pelanggan vet service.
    I.S. info pelanggan vet service masih kosong.
@@ -140,6 +146,10 @@ void MenuDokter(Queue Q);
 */ 
 void DaftarAntrian (Queue *Q);
 
+/* Memasukkan info penyakit dari hewan sesuai jumlah penyakit.
+   I.S. info penyakit masih kosong.
+   F.S. info penyakit sudah terisi.
+*/ 
 void InputPenyakit (int JmlPenyakit, infotype *x);
 
 /* Menampilkan info pelanggan vet service.
@@ -168,7 +178,7 @@ void UrutAntrian (Queue *Q, infotype Info);
    I.S. Antrian belum ditukar.
    F.S. Antrian sudah ditukar.
 */
-void TukarAntrian (Queue *Q, infotype Info, addrNQ NU, addrNQ ex);
+void TukarAntrian (Queue *Q, addrNQ NU, addrNQ ex);
 
 /* Menampilkan tata cara penggunaan aplikasi.
    I.S. Layar kosong.
