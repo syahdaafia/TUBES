@@ -113,7 +113,7 @@ int HitungWaktuTunggu1(addrNQ P, int WDaftar);
 */
 int HitungWaktuTunggu2 (addrNQ P, int WDaftar);
 
-/* Menghitung waktu tunggu layanan .
+/* Menghitung waktu mulai layanan .
    Mengembalikan hasil dari WSelesai antrian sebelumnya.
 */
 int HitungWaktuMulai (addrNQ P, int WDaftar);

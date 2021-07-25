@@ -23,18 +23,19 @@ int main (){
 		printf ("===========================================\n");
 		printf ("||      APLIKASI LAYANAN DOKTER HEWAN    ||\n");
 		printf ("||              --MAIN MENU--            ||\n");
-		printf ("||=======================================||\n");
+		printf ("===========================================\n");
 		printf ("||1. Login                               ||\n");
 		printf ("||2. How To Use                          ||\n");
-		printf ("||3. Exit                                ||\n||                                       ||\n");
+		printf ("||3. Exit                                ||\n");
+		printf ("||                                       ||\n");
 		printf ("===========================================\n\n");
-		printf ("Pilihan Anda : "); scanf("%d", &choice);
-		
+		printf ("Pilihan Anda : "); scanf("%d", &choice); 
+
 		switch (choice){
-		case 1 : MenuLogin(Q); break;
-		case 2 : HowToUse(); break;
-		case 3 : exit(0);
-		default: printf("Wrong input menu, please try again . . .\n"); break;
+			case 1 : MenuLogin(Q); break;
+			case 2 : HowToUse(); break;
+			case 3 : exit(0);
+			default: printf("Wrong input menu, please try again . . .\n"); break;
 		}
 		system("pause");
 		system ("cls");
