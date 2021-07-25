@@ -12,7 +12,13 @@ CursorRow=153
 TopLine=118
 LeftChar=1
 [Editor_1]
+<<<<<<< Updated upstream
 CursorCol=52
 CursorRow=418
 TopLine=94
+=======
+CursorCol=17
+CursorRow=331
+TopLine=109
+>>>>>>> Stashed changes
 LeftChar=1
