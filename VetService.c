@@ -193,7 +193,7 @@ void MenuPelanggan (Queue Q){
 	printf ("      APLIKASI LAYANAN DOKTER HEWAN    \n");
 	printf ("              --PELANGGAN--            \n");
 	printf ("=======================================\n");
-	printf ("1. Pendaftaran\n");
+	printf ("1. Daftar\n");
 	printf ("2. Lihat Antrian\n");
 	printf ("3. Back\n");
 	printf ("4. Exit\n\n");
