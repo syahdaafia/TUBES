@@ -161,14 +161,15 @@ void MenuLogin (Queue Q){
 	
 	do {
 	system ("cls");
-	printf ("||=======================================||\n");
+	printf ("===========================================\n");
 	printf ("||      APLIKASI LAYANAN DOKTER HEWAN    ||\n");
 	printf ("||              --LOGIN--                ||\n");
 	printf ("||=======================================||\n");
-	printf ("||Login sebagain :                       ||\n");
+	printf ("||Login sebagai :                        ||\n");
 	printf ("||1. Pelanggan                           ||\n");
 	printf ("||2. Dokter                              ||\n||                                       ||\n");
-	printf ("||Pilihan Anda :"); scanf("%d", &choice);
+	printf ("===========================================\n\n");
+	printf ("Pilihan Anda :"); scanf("%d", &choice);
 	switch (choice){
 		case 1 : MenuPelanggan(Q); break;
 		case 2 : MenuDokter(Q); break;
@@ -188,14 +189,15 @@ void MenuPelanggan (Queue Q){
 
 	do {
 	system ("cls");
-	printf ("=======================================\n");
-	printf ("      APLIKASI LAYANAN DOKTER HEWAN    \n");
-	printf ("              --PELANGGAN--            \n");
-	printf ("=======================================\n");
-	printf ("1. Daftar\n");
-	printf ("2. Lihat Antrian\n");
-	printf ("3. Back\n");
-	printf ("4. Exit\n\n");
+	printf ("===========================================\n");
+	printf ("||      APLIKASI LAYANAN DOKTER HEWAN    ||\n");
+	printf ("||              --PELANGGAN--            ||\n");
+	printf ("||=======================================||\n");
+	printf ("||1. Daftar                              ||\n");
+	printf ("||2. Lihat Antrian                       ||\n");
+	printf ("||3. Back                                ||\n");
+	printf ("||4. Exit                                ||\n||                                       ||\n");
+	printf ("===========================================\n\n");
 	printf ("Pilihan Anda : "); scanf("%d", &choice);
 	
 	switch (choice){
@@ -219,14 +221,15 @@ void MenuDokter(Queue Q){
 	
 	do {
 	system ("cls");
-	printf ("=======================================\n");
-	printf ("      APLIKASI LAYANAN DOKTER HEWAN    \n");
-	printf ("              --DOKTER--               \n");
-	printf ("=======================================\n");
-	printf ("1. Lihat Antrian\n");
-	printf ("2. Panggil Antrian\n");
-	printf ("3. Back\n");
-	printf ("4. Exit\n\n");
+	printf ("===========================================\n");
+	printf ("||      APLIKASI LAYANAN DOKTER HEWAN    ||\n");
+	printf ("||              --DOKTER--               ||\n");
+	printf ("||=======================================||\n");
+	printf ("||1. Lihat Antrian                       ||\n");
+	printf ("||2. Panggil Antrian                     ||\n");
+	printf ("||3. Back                                ||\n");
+	printf ("||4. Exit                                ||\n||                                       ||\n");
+	printf ("===========================================\n\n");
 	printf ("Pilihan Anda : "); scanf("%d", &choice);
 	
 	switch (choice){
@@ -249,13 +252,13 @@ void DaftarAntrian (Queue *Q){
 	infotype Info;
 
 	system ("cls");
-	printf ("=======================================\n");
-	printf ("      APLIKASI LAYANAN DOKTER HEWAN    \n");
-	printf ("              --PENDAFTARAN--          \n");
-	printf ("=======================================\n");
-	printf ("Nama Hewan	: "); scanf("%s", &Info.nama); fflush(stdin);
-	printf ("Waktu Datang	: "); scanf("%d", &Info.WDatang); fflush(stdin);
-	printf ("Jumlah Penyakit	: "); scanf("%d", &Info.jumlahPenyakit); fflush(stdin);
+	printf ("===========================================\n");
+	printf ("||      APLIKASI LAYANAN DOKTER HEWAN    ||\n");
+	printf ("||              --PENDAFTARAN--          ||\n");
+	printf ("===========================================\n");
+	printf ("Nama Hewan : "); scanf("%s", &Info.nama); fflush(stdin);
+	printf ("Waktu Datang : "); scanf("%d", &Info.WDatang); fflush(stdin);
+	printf ("Jumlah Penyakit : "); scanf("%d", &Info.jumlahPenyakit); fflush(stdin);
 	InputPenyakit(Info.jumlahPenyakit, &Info);
 	
 	Info.kategori = KategoriPenyakit(Info.penyakit);
@@ -297,10 +300,10 @@ void PrintAntrian (Queue Q){
 	int i;
 	
 	system ("cls");
-	printf ("=======================================\n");
-	printf ("      APLIKASI LAYANAN DOKTER HEWAN    \n");
-	printf ("           --DAFTAR ANTRIAN--          \n");
-	printf ("=======================================\n");
+	printf ("===========================================\n");
+	printf ("||      APLIKASI LAYANAN DOKTER HEWAN    ||\n");
+	printf ("||           --DAFTAR ANTRIAN--          ||\n");
+	printf ("===========================================\n");
 	
 	temp=Q.front;
 	i=0;

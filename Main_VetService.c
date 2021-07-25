@@ -20,13 +20,14 @@ int main (){
 	BuatAntrian(&Q);
 	int choice;
 	do {
-		printf ("=======================================\n");
-		printf ("      APLIKASI LAYANAN DOKTER HEWAN    \n");
-		printf ("              --MAIN MENU--            \n");
-		printf ("=======================================\n");
-		printf ("1. Login\n");
-		printf ("2. How To Use\n");
-		printf ("3. Exit\n\n");
+		printf ("===========================================\n");
+		printf ("||      APLIKASI LAYANAN DOKTER HEWAN    ||\n");
+		printf ("||              --MAIN MENU--            ||\n");
+		printf ("||=======================================||\n");
+		printf ("||1. Login                               ||\n");
+		printf ("||2. How To Use                          ||\n");
+		printf ("||3. Exit                                ||\n||                                       ||\n");
+		printf ("===========================================\n\n");
 		printf ("Pilihan Anda : "); scanf("%d", &choice);
 		
 		switch (choice){
