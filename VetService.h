@@ -150,7 +150,7 @@ void DaftarAntrian (Queue *Q);
    I.S. info penyakit masih kosong.
    F.S. info penyakit sudah terisi.
 */ 
-void InputPenyakit (int JmlPenyakit, infotype *x);
+void InputPenyakit (int JumlahPenyakit, infotype *x);
 
 /* Menampilkan info pelanggan vet service.
    I.S. info pelanggan vet service belum ditampilkan.
@@ -161,7 +161,7 @@ void PrintAntrian (Queue Q);
 /* Mengembalikan kategori penyakit dari 
    penyakit-penyakit yang diinputkan.
 */
-char* KategoriPenyakit (Sakit skt);
+char* KategoriPenyakit (Sakit sakit);
 
 /* Mengembalikan nilai prioritas berdasarkan 
    parameter prioritas.
@@ -178,11 +178,13 @@ void UrutAntrian (Queue *Q, infotype Info);
    I.S. Antrian belum ditukar.
    F.S. Antrian sudah ditukar.
 */
-void TukarAntrian (Queue *Q, addrNQ NU, addrNQ ex);
+void UbahAntrian (Queue *Q, addrNQ NewNode, addrNQ x);
 
 /* Menampilkan tata cara penggunaan aplikasi.
    I.S. Layar kosong.
    F.S. Tampilan tata cara penggunaan aplikasi.
+   author 		: M.Fauzi 
+   modifikasi	: Syahda Afia
 */
 void HowToUse ();
 

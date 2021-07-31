@@ -14,11 +14,14 @@
 #include <string.h>
 
 int main (){
-	system ("cls");
+	//deklarasi
 	Queue Q;
-	
-	BuatAntrian(&Q);
 	int choice;
+	
+	//algoritma
+	BuatAntrian(&Q);
+	
+	//menampilkan main menu selama user tidak memilih exit
 	do {
 		printf ("===========================================\n");
 		printf ("||      APLIKASI LAYANAN DOKTER HEWAN    ||\n");
@@ -35,10 +38,11 @@ int main (){
 			case 1 : MenuLogin(Q); break;
 			case 2 : HowToUse(); break;
 			case 3 : exit(0);
-			default: printf("Wrong input menu, please try again . . .\n"); break;
+			default: printf("Wrong input menu, please try again . . .\n"); fflush(stdin); break;
 		}
 		system("pause");
 		system ("cls");
 	} while (choice!=3);
+	
 	return 0;
 }
