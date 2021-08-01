@@ -228,7 +228,7 @@ void MenuPelanggan (Queue Q){
 			case 2 	: PrintAntrian(Q); break;
 			case 3	: MenuLogin (Q); break;
 			case 4 	: exit(0);
-			default : printf ("Wrong input menu, please try again . . .\n"); break;
+			default : printf ("Wrong input menu, please try again . . .\n"); fflush(stdin); break;
 		}
 		system ("pause");
 	} while (choice!=3);

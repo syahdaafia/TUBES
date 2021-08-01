@@ -7,15 +7,15 @@ LeftChar=1
 Order=2,1,0
 Focused=1
 [Editor_2]
-CursorCol=53
+CursorCol=10
 CursorRow=181
-TopLine=173
+TopLine=109
 LeftChar=1
 [Editor_1]
 <<<<<<< Updated upstream
-CursorCol=30
-CursorRow=444
-TopLine=170
+CursorCol=84
+CursorRow=231
+TopLine=171
 =======
 CursorCol=17
 CursorRow=331
