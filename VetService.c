@@ -72,7 +72,7 @@ int CekAntrianKosong (Queue Q){
    I.S. Q mungkin kosong atau Q mungkin berisi antrian.
    F.S. info baru telah masuk ke dalam Queue.
 */ 
-void Antrian (Queue *Q, infotype data){
+void MasukAntrian (Queue *Q, infotype data){
 	//deklarasi
 	addrNQ P;
 	
@@ -91,20 +91,32 @@ void Antrian (Queue *Q, infotype data){
    I.S. Q mungkin kosong atau Q mungkin berisi antrian.
    F.S. Node sudah terhapus.
 */ 
-void MulaiService (Queue *Q, infotype *data){
+void MulaiService (Queue *Q){
 	//deklarasi
 	addrNQ P;
 	
 	//algoritma
 	system("cls");
+	printf ("===========================================\n");
+	printf ("||      APLIKASI LAYANAN DOKTER HEWAN    ||\n");
+	printf ("||         --PEMANGGILAN ANTRIAN--       ||\n");
+	printf ("===========================================\n");
+	
 	if ((*Q).front==NULL){
 		printf ("Antrian Masih Kosong\n\n");
 	}else {
-		(*data)=(*Q).front->info;
-		P=(*Q).front;
-		(*Q).front = (*Q).front->next;
-		P->next=NULL;
-		printf("Antrian sudah dipanggil \n\n");
+		printf("Antrian dengan nama %s sudah dipanggil \n\n", (*Q).front->info.nama);
+		//jika antrian hanya satu
+		if ((*Q).front == (*Q).rear){
+			P = (*Q).front;
+			(*Q).rear = (*Q).rear->next;
+			(*Q).front = (*Q).front->next;
+			P->next = NULL;
+		}else {
+			P = (*Q).front;
+			(*Q).front = (*Q).front->next;
+			P->next = NULL;
+		}
 	}
 }
 
@@ -113,23 +125,23 @@ void MulaiService (Queue *Q, infotype *data){
 /* Menghitung waktu service.
    Mengembalikan waktu service sesuai dengan kategori penyakit.
 */
-int HitungWaktuService (char kategori[]){
+int HitungWaktuService (int jumlahPenyakit, char kategori[]){
 	//algoritma
 	//membandingkan kata, jika sama maka mengembalikan waktu service
 	if(strcmp(kategori, "Ringan") == 0){
-		return 15;
+		return jumlahPenyakit*15;
 	}else if(strcmp(kategori, "Sedang") == 0){
-		return 30;
+		return jumlahPenyakit*30;
 	}else if(strcmp(kategori, "Berat") == 0){
-		return 45;
+		return jumlahPenyakit*45;
 	}
 }
 
 /* Menghitung waktu selesai layanan. 
-   Mengembalikan hasil dari WDatang + WTunggu + WService.
+   Mengembalikan hasil dari WMulai + WService.
 */
 int HitungWaktuSelesai (infotype data){
-	return data.WDatang + data.WTunggu + data.WService;
+	return data.WMulai + data.WService;
 }
 
 /* Menghitung waktu tunggu layanan apabila tidak ada pertukaran antrian.
@@ -149,10 +161,10 @@ int HitungWaktuTunggu1(addrNQ rear, int WDaftar){
 /* Menghitung waktu tunggu layanan apabila ada pertukaran antrian.
    Mengembalikan hasil dari WSelesai (Node sebelumnya)- WDaftar.
 */
-int HitungWaktuTunggu2 (addrNQ P, int WDaftar){
+int HitungWaktuTunggu2 (addrNQ temp, int WDaftar){
 	//algoritma
-	if (WDaftar < P->info.WSelesai){
-		return P->info.WSelesai-WDaftar;
+	if (WDaftar < temp->info.WSelesai){
+		return temp->info.WSelesai-WDaftar;
 	}else return 0;
 }
 
@@ -262,7 +274,7 @@ void MenuDokter(Queue Q){
 		
 		switch (choice){
 			case 1 	: PrintAntrian(Q); break;
-			case 2 	: MulaiService(&Q, &Data); break;
+			case 2 	: MulaiService(&Q); break;
 			case 3 	: MenuLogin (Q); break;
 			case 4 	: exit(0);
 			default : printf ("Wrong input menu, please try again . . .\n"); fflush(stdin); break;
@@ -293,7 +305,7 @@ void DaftarAntrian (Queue *Q){
 	InputPenyakit(Info.jumlahPenyakit, &Info);
 	
 	Info.kategori = KategoriPenyakit(Info.penyakit);
-	Info.WService = HitungWaktuService(Info.kategori);
+	Info.WService = HitungWaktuService(Info.jumlahPenyakit, Info.kategori);
 	Info.prioritas = Prioritas(Info.jumlahPenyakit, Info.kategori);
 	
 	//mengurutkan antrian baru berdasarkan prioritas atau waktu datang
@@ -435,14 +447,18 @@ void UrutAntrian (Queue *Q, infotype Info){
 	//jika antrian tidak kosong dan belum ditukar maka dicek dulu
 	while (x != NULL && swap != 1){ 
 		if (Info.prioritas > x->info.prioritas){
-			UbahAntrian (Q, NewNode, x);
-			swap=1;
-		}else if (Info.prioritas == x->info.prioritas){
-			if (Info.WDatang < x->info.WDatang){
+			if (Info.WDatang < x->info.WMulai){
 				UbahAntrian (Q, NewNode, x);
-				swap=1;	
+				swap=1;
 			}else x = (*x).next;
-		}else x = (*x).next;
+		}else if (Info.prioritas == x->info.prioritas){
+			if (Info.WDatang < x->info.WMulai){
+				if (Info.WDatang < x->info.WDatang){
+					UbahAntrian (Q, NewNode, x);
+					swap=1;	
+				}else x = (*x).next;
+			}else x = (*x).next;
+		}else x = (*x).next;	
 	}
 	
 	/*jika antrian kosong atau nilai prioritasnya tidak lebih besar 
@@ -451,7 +467,7 @@ void UrutAntrian (Queue *Q, infotype Info){
 		Info.WTunggu = HitungWaktuTunggu1 ((*Q).rear, Info.WDatang);
 		Info.WMulai = HitungWaktuMulai((*Q).rear, Info.WDatang);
 		Info.WSelesai = HitungWaktuSelesai (Info);
-		Antrian (Q, Info);
+		MasukAntrian (Q, Info);
 	}	
 }
 

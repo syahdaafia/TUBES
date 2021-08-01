@@ -83,23 +83,23 @@ int CekAntrianKosong (Queue Q);
    I.S. Q mungkin kosong atau Q mungkin berisi antrian.
    F.S. info baru telah masuk ke dalam Queue.
 */ 
-void Antrian (Queue *Q, infotype data);
+void MasukAntrian (Queue *Q, infotype data);
 
 /* Menghapus node dari Queue dengan aturan FIFO .
    I.S. Q mungkin kosong atau Q mungkin berisi antrian.
    F.S. Node sudah terhapus.
 */ 
-void MulaiService (Queue *Q, infotype *data);
+void MulaiService (Queue *Q);
 
 
 /*** MANAJEMEN WAKTU ***/
 /* Menghitung waktu service sesuai dengan kategori penyakit.
     Mengembalikan waktu service sesuai dengan kategori penyakit.
 */
-int HitungWaktuService (char kategori[]);
+int HitungWaktuService (int jumlahPenyakit, char kategori[]);
 
 /* Menghitung waktu selesai layanan. 
-   Mengembalikan hasil dari WDatang + WTunggu + WService.
+   Mengembalikan hasil dari WMulai + WService.
 */
 int HitungWaktuSelesai (infotype data);
 
@@ -111,7 +111,7 @@ int HitungWaktuTunggu1(addrNQ rear, int WDaftar);
 /* Menghitung waktu tunggu layanan apabila ada pertukaran antrian.
    Mengembalikan hasil dari WSelesai (Node sebelumnya)- WDaftar.
 */
-int HitungWaktuTunggu2 (addrNQ P, int WDaftar);
+int HitungWaktuTunggu2 (addrNQ temp, int WDaftar);
 
 /* Menghitung waktu tunggu layanan.
    Mengembalikan hasil dari Waktu Daftar atau Waktu 
