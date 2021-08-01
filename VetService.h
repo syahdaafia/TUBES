@@ -96,7 +96,7 @@ void MulaiService (Queue *Q, infotype *data);
 /* Menghitung waktu service sesuai dengan kategori penyakit.
     Mengembalikan waktu service sesuai dengan kategori penyakit.
 */
-int HitungWaktuService (char data[]);
+int HitungWaktuService (char kategori[]);
 
 /* Menghitung waktu selesai layanan. 
    Mengembalikan hasil dari WDatang + WTunggu + WService.
@@ -106,17 +106,18 @@ int HitungWaktuSelesai (infotype data);
 /* Menghitung waktu tunggu layanan apabila tidak ada pertukaran antrian.
    Mengembalikan hasil dari WSelesai (rear)- WDaftar.
 */
-int HitungWaktuTunggu1(addrNQ P, int WDaftar);
+int HitungWaktuTunggu1(addrNQ rear, int WDaftar);
 
 /* Menghitung waktu tunggu layanan apabila ada pertukaran antrian.
    Mengembalikan hasil dari WSelesai (Node sebelumnya)- WDaftar.
 */
 int HitungWaktuTunggu2 (addrNQ P, int WDaftar);
 
-/* Menghitung waktu mulai layanan .
-   Mengembalikan hasil dari WSelesai antrian sebelumnya.
+/* Menghitung waktu tunggu layanan.
+   Mengembalikan hasil dari Waktu Daftar atau Waktu 
+   Selesai node sebelumnya
 */
-int HitungWaktuMulai (addrNQ P, int WDaftar);
+int HitungWaktuMulai (addrNQ rear, int WDaftar);
 
 
 /*** MANAJEMEN MENU NAVIGASI ***/

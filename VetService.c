@@ -113,14 +113,14 @@ void MulaiService (Queue *Q, infotype *data){
 /* Menghitung waktu service.
    Mengembalikan waktu service sesuai dengan kategori penyakit.
 */
-int HitungWaktuService (char data[]){
+int HitungWaktuService (char kategori[]){
 	//algoritma
 	//membandingkan kata, jika sama maka mengembalikan waktu service
-	if(strcmp(data, "Ringan") == 0){
+	if(strcmp(kategori, "Ringan") == 0){
 		return 15;
-	}else if(strcmp(data, "Sedang") == 0){
+	}else if(strcmp(kategori, "Sedang") == 0){
 		return 30;
-	}else if(strcmp(data, "Berat") == 0){
+	}else if(strcmp(kategori, "Berat") == 0){
 		return 45;
 	}
 }
@@ -135,12 +135,12 @@ int HitungWaktuSelesai (infotype data){
 /* Menghitung waktu tunggu layanan apabila tidak ada pertukaran antrian.
    Mengembalikan hasil dari WSelesai (rear)- WDaftar.
 */
-int HitungWaktuTunggu1(addrNQ P, int WDaftar){
+int HitungWaktuTunggu1(addrNQ rear, int WDaftar){
 	//algoritma
-	if(P == NULL){
+	if(rear == NULL){
 		return 0;
-	}else if(WDaftar < P->info.WSelesai){
-			return P->info.WSelesai-WDaftar;
+	}else if(WDaftar < rear->info.WSelesai){
+			return rear->info.WSelesai-WDaftar;
 		}else{
 			return 0;
 	}
@@ -157,13 +157,14 @@ int HitungWaktuTunggu2 (addrNQ P, int WDaftar){
 }
 
 /* Menghitung waktu tunggu layanan.
-   Mengembalikan hasil dari WDatang + WTunggu.
+   Mengembalikan hasil dari Waktu Daftar atau Waktu 
+   Selesai node sebelumnya
 */
-int HitungWaktuMulai (addrNQ P, int WDaftar){
+int HitungWaktuMulai (addrNQ rear, int WDaftar){
 	//algoritma
-	if(P == NULL || WDaftar > P->info.WSelesai){
+	if(rear == NULL || WDaftar > rear->info.WSelesai){
 		return WDaftar;
-	}else return P->info.WSelesai;
+	}else return rear->info.WSelesai;
 }
 
 /*** MANAJEMEN MENU NAVIGASI ***/
@@ -231,7 +232,7 @@ void MenuPelanggan (Queue Q){
 			default : printf ("Wrong input menu, please try again . . .\n"); fflush(stdin); break;
 		}
 		system ("pause");
-	} while (choice!=3);
+	} while (choice!=4);
 }
 
 /* Menampilkan menu dokter.
@@ -267,7 +268,7 @@ void MenuDokter(Queue Q){
 			default : printf ("Wrong input menu, please try again . . .\n"); fflush(stdin); break;
 		}
 		system ("pause");
-	} while (choice!=3);
+	} while (choice!=4);
 }
 
 /*** MANAJEMEN FITUR ***/
@@ -436,16 +437,16 @@ void UrutAntrian (Queue *Q, infotype Info){
 		if (Info.prioritas > x->info.prioritas){
 			UbahAntrian (Q, NewNode, x);
 			swap=1;
-		} else if (Info.prioritas == x->info.prioritas){
+		}else if (Info.prioritas == x->info.prioritas){
 			if (Info.WDatang < x->info.WDatang){
 				UbahAntrian (Q, NewNode, x);
 				swap=1;	
-			} else x = (*x).next;
-		} else x = (*x).next;
+			}else x = (*x).next;
+		}else x = (*x).next;
 	}
 	
 	/*jika antrian kosong atau nilai prioritasnya tidak lebih besar 
-	dari yang ada maka langsung masuk ke antrian*/
+	dari antrian yang ada maka langsung masuk ke antrian*/
 	if(x == NULL){	
 		Info.WTunggu = HitungWaktuTunggu1 ((*Q).rear, Info.WDatang);
 		Info.WMulai = HitungWaktuMulai((*Q).rear, Info.WDatang);
