@@ -10,176 +10,126 @@
 
 #ifndef VETSERVICE_H
 #define VETSERVICE_H
+#include "queue.h"
 #define HOW_TO_USE "howToUse.txt"
-
-			/* Atribut ADT */
-/*========================================*/
-typedef struct NodeQueue *addrNQ;
-typedef struct InfoPelangganVetService infotype;
-typedef struct InfoPenyakit Sakit;
-
-typedef struct InfoPenyakit {
-	char penyakit1[20]; 
-	char penyakit2[20]; 
-	char penyakit3[20]; 
-}InfoPenyakit;
-
-typedef struct InfoPelangganVetService{
-	char nama[20];
-	Sakit penyakit;
-	char* kategori;
-	int jumlahPenyakit;
-	int prioritas;
-	int WDatang;
-	int WTunggu;
-	int WMulai;
-	int WService;
-	int WSelesai;
-} InfoPelangganVetService;
-
-typedef struct NodeQueue{
-	infotype info;
-	addrNQ next;	
-} NodeQueue;
-
-typedef struct Queue{
-	addrNQ front;  //menandai antrian depan
-	addrNQ rear; //menandai antrian belakang
-}Queue;
-
 
 		   	/* Operasi ADT */
 /*========================================*/
 
-/*** MANAJEMEN MEMORI ***/
-/* Mengirimkan address hasil alokasi sebuah elemen dengan info X.
-   Jika alokasi berhasil, modul mengembalikan P; P->info = X, = NULL.
-   P adalah pointer yang menunjuk ke node Queue sebagai hasil alokasi.
-   Jika alokasi gagal, modul mengembalikan NULL.
- */
-addrNQ Alokasi (infotype X);
-
-/* Melakukan dealokasi elemen P (pointer menunjuk ke alamat node queue).
-   I.S. P terdefinisi.
-   F.S. P dikembalikan ke sistem.
- */
-void Dealokasi (addrNQ *P);
-
-
-/*** Manajemen Queue ***/
-/* Membuat sebuah Queue kosong dengan Q.fornt = NULL dan Q.rear = NULL. 
-   I.S. Belum terbentuk Queue 
-   F.S. Sudah terbentuk Queue
-*/
-void BuatAntrian (Queue *Q);
-
-/* Mengetahui apakah Queue kosong atau tidak. 
-   mengirimkan 1, jika Queue kosong yaitu Q.front = NULL dan Q.rear = NULL.
-   mengirimkan 0, jika Queue tidak kosong.
-*/
-int CekAntrianKosong (Queue Q);
-
-/* Memasukkan info baru ke dalam Queue dengan aturan FIFO.
-   I.S. Q mungkin kosong atau Q mungkin berisi antrian.
-   F.S. info baru telah masuk ke dalam Queue.
-*/ 
-void MasukAntrian (Queue *Q, infotype data);
-
-/* Menghapus node dari Queue dengan aturan FIFO .
-   I.S. Q mungkin kosong atau Q mungkin berisi antrian.
-   F.S. Node sudah terhapus.
-*/ 
-void MulaiService (Queue *Q);
-
-
-/*** MANAJEMEN WAKTU ***/
-/* Menghitung waktu service sesuai dengan kategori penyakit.
-    Mengembalikan waktu service sesuai dengan kategori penyakit.
-*/
-int HitungWaktuService (int jumlahPenyakit, char kategori[]);
-
-/* Menghitung waktu selesai layanan. 
-   Mengembalikan hasil dari WMulai + WService.
-*/
-int HitungWaktuSelesai (infotype data);
-
-/* Menghitung waktu tunggu layanan apabila tidak ada pertukaran antrian.
-   Mengembalikan hasil dari WSelesai (rear)- WDaftar.
-*/
-int HitungWaktuTunggu1(addrNQ rear, int WDaftar);
-
-/* Menghitung waktu tunggu layanan apabila ada pertukaran antrian.
-   Mengembalikan hasil dari WSelesai (Node sebelumnya)- WDaftar.
-*/
-int HitungWaktuTunggu2 (addrNQ temp, int WDaftar);
-
-/* Menghitung waktu tunggu layanan.
-   Mengembalikan hasil dari Waktu Daftar atau Waktu 
-   Selesai node sebelumnya
-*/
-int HitungWaktuMulai (addrNQ rear, int WDaftar);
-
-
-/*** MANAJEMEN MENU NAVIGASI ***/
-/* Menampilkan menu login.
+/*** MODUL PRINT MENU ***/
+/* Menampilkan main menu.
    I.S. Layar kosong.
    F.S. Tampilan main menu.
+   Author : M.Faza Hardiansyah.
 */ 
-void MenuLogin (Queue Q);
+void PrintMainMenu ();
+
+/* Menampilkan menu login.
+   I.S. Layar kosong.
+   F.S. Tampilan login.
+   Author : M.Faza Hardiansyah.
+*/ 
+void PrintMenuLogin ();
 
 /* Menampilkan menu pelanggan.
    I.S. Layar kosong.
    F.S. Tampilan menu pelanggan.
+   Author : M.Faza Hardiansyah.
 */ 
-void MenuPelanggan (Queue Q);
+void PrintMenuPelanggan ();
 
 /* Menampilkan menu dokter.
    I.S. Layar kosong.
    F.S. Tampilan menu dokter.
+   Author : M.Faza Hardiansyah.
 */ 
-void MenuDokter(Queue Q);
+void PrintMenuDokter();
+
+/* Menampilkan menu dokter.
+   I.S. Layar kosong.
+   F.S. Tampilan menu pendaftaran.
+   Author : M.Faza Hardiansyah.
+*/ 
+void PrintMenuPendaftaran();
+
+/* Menampilkan menu dokter.
+   I.S. Layar kosong.
+   F.S. Tampilan menu lihat antrian.
+   Author : M.Faza Hardiansyah.
+*/ 
+void PrintMenuLihatAntrian();
+
+/* Menampilkan menu panggil antrian.
+   I.S. Layar kosong.
+   F.S. Tampilan menu panggil antrian.
+   Author : M.Faza Hardiansyah.
+*/ 
+void PrintPanggilAntrian();
+
+/* Menampilkan penyakit yang dialami hewan.
+   I.S. Layar kosong.
+   F.S. Tampilan penyakit yang dialami hewan.
+   Author : Syahda Afia.
+*/ 
+void PrintPenyakit(addrNQ temp);
+
+
+/*** MANAJEMEN MENU ***/
+/* Menjalankan halaman login.
+   I.S. Tampilan menu login.
+   F.S. Tampilan menu pelanggan/dokter.
+   Author : Syahda Afia.
+*/ 
+void UserLogin (Queue Q);
+
+/* Menjalankan halaman pelanggan.
+   I.S. Tampilan menu pelanggan.
+   F.S. Tampilan menu pendaftaran/daftar antrian/login/exit.
+   Author : Syahda Afia.
+*/ 
+void TransaksiPelanggan (Queue Q);
+
+/* Menampilkan halaman dokter.
+   I.S. Tampilan menu dokter.
+   F.S. Tampilan menu daftar antrian/panggil antrian/login/exit.
+   Author : Syahda Afia.
+*/ 
+void TransaksiDokter(Queue Q);
 
 
 /*** MANAJEMEN FITUR ***/
 /* Memasukkan info pelanggan vet service.
    I.S. info pelanggan vet service masih kosong.
    F.S. info pelanggan vet service sudah terisi.
+   Author : Syahda Afia.
 */ 
 void DaftarAntrian (Queue *Q);
 
 /* Memasukkan info penyakit dari hewan sesuai jumlah penyakit.
    I.S. info penyakit masih kosong.
    F.S. info penyakit sudah terisi.
+   Author : Syahda Afia.
 */ 
 void InputPenyakit (int JumlahPenyakit, infotype *x);
 
 /* Menampilkan info pelanggan vet service.
    I.S. info pelanggan vet service belum ditampilkan.
    F.S. info pelanggan vet service sudah ditampilkan.
+   Author : Syahda Afia.
 */ 
-void PrintAntrian (Queue Q);
+void LihatAntrian (Queue Q);
 
 /* Mengembalikan kategori penyakit dari 
    penyakit-penyakit yang diinputkan.
+   Author : Syahda Afia.
 */
 char* KategoriPenyakit (Sakit sakit);
 
 /* Mengembalikan nilai prioritas berdasarkan 
    parameter prioritas.
+   Author : Syahda Afia.
 */
 int Prioritas (int JumlahPenyakit, char Kategori[]);
-
-/* Megurutkan daftar antrian sesuai waktu dan prioritas
-   I.S. Antrian belum terurut.
-   F.S. Antrian sudah terurut.
-*/
-void UrutAntrian (Queue *Q, infotype Info);
-
-/* Menukar urutan antrian apabila ada antrian yang diprioritaskan
-   I.S. Antrian belum ditukar.
-   F.S. Antrian sudah ditukar.
-*/
-void UbahAntrian (Queue *Q, addrNQ NewNode, addrNQ x);
 
 /* Menampilkan tata cara penggunaan aplikasi.
    I.S. Layar kosong.
@@ -188,5 +138,37 @@ void UbahAntrian (Queue *Q, addrNQ NewNode, addrNQ x);
    modifikasi	: Syahda Afia
 */
 void HowToUse ();
+
+
+/*** MANAJEMEN WAKTU ***/
+/* Menghitung waktu service sesuai dengan kategori penyakit.
+   Mengembalikan waktu service sesuai dengan kategori penyakit.
+   Author : Syahda Afia.
+*/
+int HitungWaktuService (int jumlahPenyakit, char kategori[]);
+
+/* Menghitung waktu tunggu layanan apabila tidak ada pertukaran antrian.
+   Mengembalikan hasil dari WSelesai (rear)- WDaftar.
+   Author : Syahda Afia.
+*/
+int HitungWaktuTunggu1(addrNQ rear, int WDaftar);
+
+/* Menghitung waktu tunggu layanan apabila ada pertukaran antrian.
+   Mengembalikan hasil dari WSelesai (Node sebelumnya)- WDaftar.
+   Author : Syahda Afia.
+*/
+int HitungWaktuTunggu2 (addrNQ temp, int WDaftar);
+
+/* Menghitung waktu mulai layanan.
+   Mengembalikan hasil dari Waktu Daftar atau Waktu Selesai node sebelumnya
+   Author : Syahda Afia.
+*/
+int HitungWaktuMulai (addrNQ rear, int WDaftar);
+
+/* Menghitung waktu selesai layanan. 
+   Mengembalikan hasil dari WMulai + WService.
+   Author : Syahda Afia.
+*/
+int HitungWaktuSelesai (infotype data);
 
 #endif

@@ -9,249 +9,206 @@
 */
 
 #include "VetService.h"
+#include "queue.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
-
 			/* Implementasi ADT */
 /*========================================*/
 
-/*** MANAJEMEN MEMORI ***/
-/* Mengirimkan address hasil alokasi sebuah elemen dengan info X.
-   Jika alokasi berhasil, modul mengembalikan P; P->info = X, = NULL.
-   P adalah pointer yang menunjuk ke node Queue sebagai hasil alokasi.
-   Jika alokasi gagal, modul mengembalikan NULL.
- */
-addrNQ Alokasi (infotype X){
-	//deklarasi
-	addrNQ P;
-	
-	//algoritma
-	P = (addrNQ)malloc(sizeof(NodeQueue));
-	if (P != NULL){
-		P->info = X;
-		P->next = NULL;
-		return P;
-	} else return NULL;
-}
-
-/* Melakukan dealokasi elemen P (pointer menunjuk ke alamat node queue).
-   I.S.: P terdefinisi.
-   F.S.: P dikembalikan ke sistem.
- */
-void Dealokasi (addrNQ *P){
-	//algoritma
-	free(*P);
-}
-
-
-/*** Manajemen Queue ***/
-/* Membuat sebuah Queue kosong dengan Q.fornt = NULL dan Q.rear = NULL. 
-   I.S. Belum terbentuk Queue 
-   F.S. Sudah terbentuk Queue
-*/
-void BuatAntrian (Queue *Q){
-	//algoritma
-	(*Q).front = NULL;
-	(*Q).rear = NULL;
-}
-
-/* Mengetahui apakah Queue kosong atau tidak. 
-   mengirimkan 1, jika Queue kosong yaitu Q.front = NULL dan Q.rear = NULL.
-   mengirimkan 0, jika Queue tidak kosong.
-*/
-int CekAntrianKosong (Queue Q){
-	//algoritma
-	if(Q.front == NULL){
-		return 1;
-	} else return 0;
-}
-
-/* Memasukkan info baru ke dalam Queue dengan aturan FIFO.
-   I.S. Q mungkin kosong atau Q mungkin berisi antrian.
-   F.S. info baru telah masuk ke dalam Queue.
+/*** MODUL PRINT ***/
+/* Menampilkan main menu.
+   I.S. Layar kosong.
+   F.S. Tampilan main menu.
+   Author : M.Faza Hardiansyah.
 */ 
-void MasukAntrian (Queue *Q, infotype data){
-	//deklarasi
-	addrNQ P;
-	
-	//algoritma
-	P = Alokasi(data);
-	if (CekAntrianKosong(*Q) == 1){
-		(*Q).front = P;
-		(*Q).rear = P;
-	} else {
-		(*Q).rear->next = P;
-		(*Q).rear = P;
-	}
+void PrintMainMenu (){
+	printf ("===========================================\n");
+	printf ("||      APLIKASI LAYANAN DOKTER HEWAN    ||\n");
+	printf ("||              --MAIN MENU--            ||\n");
+	printf ("===========================================\n");
+	printf ("||1. Login                               ||\n");
+	printf ("||2. How To Use                          ||\n");
+	printf ("||3. Exit                                ||\n");
+	printf ("||                                       ||\n");
+	printf ("===========================================\n\n");
+	printf ("Pilihan Anda : "); 
 }
 
-/* Menghapus node dari Queue dengan aturan FIFO .
-   I.S. Q mungkin kosong atau Q mungkin berisi antrian.
-   F.S. Node sudah terhapus.
+/* Menampilkan menu login.
+   I.S. Layar kosong.
+   F.S. Tampilan login.
+   Author : M.Faza Hardiansyah.
 */ 
-void MulaiService (Queue *Q){
-	//deklarasi
-	addrNQ P;
-	
-	//algoritma
+void PrintMenuLogin (){
+	system ("cls");
+	printf ("===========================================\n");
+	printf ("||      APLIKASI LAYANAN DOKTER HEWAN    ||\n");
+	printf ("||              --LOGIN--                ||\n");
+	printf ("===========================================\n");
+	printf ("||Login sebagai :                        ||\n");
+	printf ("||1. Pelanggan                           ||\n");
+	printf ("||2. Dokter                              ||\n");
+	printf ("||                                       ||\n");
+	printf ("===========================================\n\n");
+	printf ("Pilihan Anda : "); 
+}
+
+/* Menampilkan menu pelanggan.
+   I.S. Layar kosong.
+   F.S. Tampilan menu pelanggan.
+   Author : M.Faza Hardiansyah.
+*/ 
+void PrintMenuPelanggan (){
+	system("cls");
+	printf ("===========================================\n");
+	printf ("||      APLIKASI LAYANAN DOKTER HEWAN    ||\n");
+	printf ("||              --PELANGGAN--            ||\n");
+	printf ("===========================================\n");
+	printf ("||1. Daftar                              ||\n");
+	printf ("||2. Lihat Antrian                       ||\n");
+	printf ("||3. Back                                ||\n");
+	printf ("||4. Exit                                ||\n");
+	printf ("||                                       ||\n");
+	printf ("===========================================\n\n");
+	printf ("Pilihan Anda : "); 	
+}
+
+/* Menampilkan menu dokter.
+   I.S. Layar kosong.
+   F.S. Tampilan menu dokter.
+   Author : M.Faza Hardiansyah.
+*/ 
+void PrintMenuDokter(){
+	system ("cls");
+	printf ("===========================================\n");
+	printf ("||      APLIKASI LAYANAN DOKTER HEWAN    ||\n");
+	printf ("||              --DOKTER--               ||\n");
+	printf ("===========================================\n");
+	printf ("||1. Lihat Antrian                       ||\n");
+	printf ("||2. Panggil Antrian                     ||\n");
+	printf ("||3. Back                                ||\n");
+	printf ("||4. Exit                                ||\n");
+	printf ("||                                       ||\n");
+	printf ("===========================================\n\n");
+	printf ("Pilihan Anda : "); 
+}
+
+/* Menampilkan menu dokter.
+   I.S. Layar kosong.
+   F.S. Tampilan menu pendaftaran.
+   Author : M.Faza Hardiansyah.
+*/ 
+void PrintMenuPendaftaran(){
+	system ("cls");
+	printf ("===========================================\n");
+	printf ("||      APLIKASI LAYANAN DOKTER HEWAN    ||\n");
+	printf ("||              --PENDAFTARAN--          ||\n");
+	printf ("===========================================\n");
+}
+
+/* Menampilkan menu dokter.
+   I.S. Layar kosong.
+   F.S. Tampilan menu lihat antrian.
+   Author : M.Faza Hardiansyah.
+*/ 
+void PrintMenuLihatAntrian(){
+	system ("cls");
+	printf ("===========================================\n");
+	printf ("||      APLIKASI LAYANAN DOKTER HEWAN    ||\n");
+	printf ("||           --DAFTAR ANTRIAN--          ||\n");
+	printf ("===========================================\n");
+}
+
+/* Menampilkan menu panggil antrian.
+   I.S. Layar kosong.
+   F.S. Tampilan menu panggil antrian.
+   Author : M.Faza Hardiansyah.
+*/ 
+void PrintPanggilAntrian(){
 	system("cls");
 	printf ("===========================================\n");
 	printf ("||      APLIKASI LAYANAN DOKTER HEWAN    ||\n");
 	printf ("||         --PEMANGGILAN ANTRIAN--       ||\n");
 	printf ("===========================================\n");
-	
-	if ((*Q).front==NULL){
-		printf ("Antrian Masih Kosong\n\n");
-	}else {
-		printf("Antrian dengan nama %s sudah dipanggil \n\n", (*Q).front->info.nama);
-		//jika antrian hanya satu
-		if ((*Q).front == (*Q).rear){
-			P = (*Q).front;
-			(*Q).rear = (*Q).rear->next;
-			(*Q).front = (*Q).front->next;
-			P->next = NULL;
-		}else {
-			P = (*Q).front;
-			(*Q).front = (*Q).front->next;
-			P->next = NULL;
-		}
-	}
 }
 
-
-/*** MANAJEMEN WAKTU ***/
-/* Menghitung waktu service.
-   Mengembalikan waktu service sesuai dengan kategori penyakit.
-*/
-int HitungWaktuService (int jumlahPenyakit, char kategori[]){
-	//algoritma
-	//membandingkan kata, jika sama maka mengembalikan waktu service
-	if(strcmp(kategori, "Ringan") == 0){
-		return jumlahPenyakit*15;
-	}else if(strcmp(kategori, "Sedang") == 0){
-		return jumlahPenyakit*30;
-	}else if(strcmp(kategori, "Berat") == 0){
-		return jumlahPenyakit*45;
-	}
-}
-
-/* Menghitung waktu selesai layanan. 
-   Mengembalikan hasil dari WMulai + WService.
-*/
-int HitungWaktuSelesai (infotype data){
-	return data.WMulai + data.WService;
-}
-
-/* Menghitung waktu tunggu layanan apabila tidak ada pertukaran antrian.
-   Mengembalikan hasil dari WSelesai (rear)- WDaftar.
-*/
-int HitungWaktuTunggu1(addrNQ rear, int WDaftar){
-	//algoritma
-	if(rear == NULL){
-		return 0;
-	}else if(WDaftar < rear->info.WSelesai){
-			return rear->info.WSelesai-WDaftar;
-		}else{
-			return 0;
-	}
-}
-
-/* Menghitung waktu tunggu layanan apabila ada pertukaran antrian.
-   Mengembalikan hasil dari WSelesai (Node sebelumnya)- WDaftar.
-*/
-int HitungWaktuTunggu2 (addrNQ temp, int WDaftar){
-	//algoritma
-	if (WDaftar < temp->info.WSelesai){
-		return temp->info.WSelesai-WDaftar;
-	}else return 0;
-}
-
-/* Menghitung waktu tunggu layanan.
-   Mengembalikan hasil dari Waktu Daftar atau Waktu 
-   Selesai node sebelumnya
-*/
-int HitungWaktuMulai (addrNQ rear, int WDaftar){
-	//algoritma
-	if(rear == NULL || WDaftar > rear->info.WSelesai){
-		return WDaftar;
-	}else return rear->info.WSelesai;
-}
-
-/*** MANAJEMEN MENU NAVIGASI ***/
-/* Menampilkan menu login.
+/* Menampilkan penyakit yang dialami hewan.
    I.S. Layar kosong.
-   F.S. Tampilan main menu.
+   F.S. Tampilan penyakit yang dialami hewan.
+   Author : Syahda Afia.
 */ 
-void MenuLogin (Queue Q){
+void PrintPenyakit(addrNQ temp){
+	//algoritma
+	if (temp->info.jumlahPenyakit==3){ //menampilkan 3 penyakit yang dialami hewan
+		printf ("Penyakit		: %s - %s - %s\n", temp->info.penyakit.penyakit1, 
+		temp->info.penyakit.penyakit2, temp->info.penyakit.penyakit3);
+	} else if (temp->info.jumlahPenyakit==2){ //menampilkan 2 penyakit yang dialami hewan
+		printf ("Penyakit		: %s - %s\n", temp->info.penyakit.penyakit1, 
+		temp->info.penyakit.penyakit2);
+	} else if (temp->info.jumlahPenyakit==1){ //menampilkan 1 penyakit yang dialami hewan
+		printf ("Penyakit		: %s\n", temp->info.penyakit.penyakit1);
+	}
+}
+
+/*** MODUL MENJALANKAN MENU ***/
+/* Menjalankan halaman login.
+   I.S. Tampilan menu login.
+   F.S. Tampilan menu pelanggan/dokter.
+   Author : Syahda Afia.
+*/ 
+void UserLogin (Queue Q){
 	//deklarasi
 	int choice;
 	
 	//algoritma
 	//menampilkan menu login selama user belum login
 	do { 
-		system ("cls");
-		printf ("===========================================\n");
-		printf ("||      APLIKASI LAYANAN DOKTER HEWAN    ||\n");
-		printf ("||              --LOGIN--                ||\n");
-		printf ("===========================================\n");
-		printf ("||Login sebagai :                        ||\n");
-		printf ("||1. Pelanggan                           ||\n");
-		printf ("||2. Dokter                              ||\n");
-		printf ("||                                       ||\n");
-		printf ("===========================================\n\n");
-		printf ("Pilihan Anda : "); scanf("%d", &choice);
+		PrintMenuLogin();
+		scanf("%d", &choice); //menerima inputan pilihan login dari user
 		
 		switch (choice){
-			case 1 : MenuPelanggan(Q); break;
-			case 2 : MenuDokter(Q); break;
-			default: printf("Wrong input menu, please try again . . .\n"); fflush(stdin); break;
+			case 1 : TransaksiPelanggan(Q); break; //masuk ke menu pelanggan
+			case 2 : TransaksiDokter(Q); break; //masuk ke menu dokter
+			default: printf("Wrong input menu, please try again . . .\n"); fflush(stdin); break; //jika input tidak sesuai
 		}
 		system ("pause");
 	} while (choice != 1 && choice !=2); 
 }
 
-/* Menampilkan menu pelanggan.
-   I.S. Layar kosong.
-   F.S. Tampilan menu pelanggan.
+/* Menjalankan halaman pelanggan.
+   I.S. Tampilan menu pelanggan.
+   F.S. Tampilan menu pendaftaran/daftar antrian/login/exit.
+   Author : Syahda Afia.
 */ 
-void MenuPelanggan (Queue Q){
+void TransaksiPelanggan (Queue Q){
 	//deklarasi
 	int choice;
 	
 	//algoritma
 	//menampilkan menu pelanggan selama user tidak memilih exit
 	do {
-		system("cls");
-		printf ("===========================================\n");
-		printf ("||      APLIKASI LAYANAN DOKTER HEWAN    ||\n");
-		printf ("||              --PELANGGAN--            ||\n");
-		printf ("===========================================\n");
-		printf ("||1. Daftar                              ||\n");
-		printf ("||2. Lihat Antrian                       ||\n");
-		printf ("||3. Back                                ||\n");
-		printf ("||4. Exit                                ||\n");
-		printf ("||                                       ||\n");
-		printf ("===========================================\n\n");
-		printf ("Pilihan Anda : "); scanf("%d", &choice);
+		PrintMenuPelanggan();
+		scanf("%d", &choice); //menerima inputan pilihan menu dari pelanggan
 		
 		switch (choice){
-			case 1 	: DaftarAntrian(&Q); break;
-			case 2 	: PrintAntrian(Q); break;
-			case 3	: MenuLogin (Q); break;
-			case 4 	: exit(0);
-			default : printf ("Wrong input menu, please try again . . .\n"); fflush(stdin); break;
+			case 1 	: DaftarAntrian(&Q); break; //masuk ke menu pendaftaran
+			case 2 	: LihatAntrian(Q); break; //masuk ke menu lihat antrian
+			case 3	: UserLogin (Q); break; //kembali ke main menu
+			case 4 	: exit(0); //keluar dari program
+			default : printf ("Wrong input menu, please try again . . .\n"); fflush(stdin); break; //jika input salah
 		}
 		system ("pause");
 	} while (choice!=4);
 }
 
-/* Menampilkan menu dokter.
-   I.S. Layar kosong.
-   F.S. Tampilan menu dokter.
+/* Menampilkan halaman dokter.
+   I.S. Tampilan menu dokter.
+   F.S. Tampilan menu daftar antrian/panggil antrian/login/exit.
+   Author : Syahda Afia.
 */ 
-void MenuDokter(Queue Q){
+void TransaksiDokter(Queue Q){
 	//deklarasi
 	int choice;
 	infotype Data;
@@ -259,25 +216,15 @@ void MenuDokter(Queue Q){
 	//algoritma
 	//menampilkan menu dokter selama user tidak memilih exit
 	do {
-		system ("cls");
-		printf ("===========================================\n");
-		printf ("||      APLIKASI LAYANAN DOKTER HEWAN    ||\n");
-		printf ("||              --DOKTER--               ||\n");
-		printf ("===========================================\n");
-		printf ("||1. Lihat Antrian                       ||\n");
-		printf ("||2. Panggil Antrian                     ||\n");
-		printf ("||3. Back                                ||\n");
-		printf ("||4. Exit                                ||\n");
-		printf ("||                                       ||\n");
-		printf ("===========================================\n\n");
-		printf ("Pilihan Anda : "); scanf("%d", &choice);
+		PrintMenuDokter();
+		scanf("%d", &choice); //menerima inputan pilihan menu dari pelanggan
 		
 		switch (choice){
-			case 1 	: PrintAntrian(Q); break;
-			case 2 	: MulaiService(&Q); break;
-			case 3 	: MenuLogin (Q); break;
-			case 4 	: exit(0);
-			default : printf ("Wrong input menu, please try again . . .\n"); fflush(stdin); break;
+			case 1 	: LihatAntrian(Q); break; //masuk ke menu lihat antrian
+			case 2 	: MulaiService(&Q); break; //masuk ke menu panggil antrian
+			case 3 	: UserLogin (Q); break; //kembali ke menu login
+			case 4 	: exit(0); //keluar dari program
+			default : printf ("Wrong input menu, please try again . . .\n"); fflush(stdin); break; //jika input salah
 		}
 		system ("pause");
 	} while (choice!=4);
@@ -287,26 +234,24 @@ void MenuDokter(Queue Q){
 /* Memasukkan info pelanggan vet service.
    I.S. info pelanggan vet service masih kosong.
    F.S. info pelanggan vet service sudah terisi.
+   Author : Syahda Afia.
 */ 
 void DaftarAntrian (Queue *Q){
 	//deklarasi
 	infotype Info;
 
 	//algoritma
-	system ("cls");
-	printf ("===========================================\n");
-	printf ("||      APLIKASI LAYANAN DOKTER HEWAN    ||\n");
-	printf ("||              --PENDAFTARAN--          ||\n");
-	printf ("===========================================\n");
-	//mendata informasi pelanggan
-	printf ("Nama Hewan	: "); scanf("%s", &Info.nama); fflush(stdin);
-	printf ("Waktu Datang 	: "); scanf("%d", &Info.WDatang); fflush(stdin);
-	printf ("Jumlah Penyakit : "); scanf("%d", &Info.jumlahPenyakit); fflush(stdin);
-	InputPenyakit(Info.jumlahPenyakit, &Info);
+	PrintMenuPendaftaran();
 	
-	Info.kategori = KategoriPenyakit(Info.penyakit);
-	Info.WService = HitungWaktuService(Info.jumlahPenyakit, Info.kategori);
-	Info.prioritas = Prioritas(Info.jumlahPenyakit, Info.kategori);
+	//mendata informasi pelanggan
+	printf ("Nama Hewan	: ");		scanf("%s", &Info.nama); fflush(stdin); //menerima input nama hewan dari pelanggan
+	printf ("Waktu Datang 	: ");	scanf("%d", &Info.WDatang); fflush(stdin); //menerima input waktu datang dari pelanggan
+	printf ("Jumlah Penyakit : ");	scanf("%d", &Info.jumlahPenyakit); fflush(stdin); //menerima input jumlah penyakit dari pelanggan
+	InputPenyakit(Info.jumlahPenyakit, &Info); //menerima input penyakit yang dialami hewan dari pelanggan
+	
+	Info.kategori = KategoriPenyakit(Info.penyakit); //mendapatkan kategori dari penyakit yang dialami
+	Info.WService = HitungWaktuService(Info.jumlahPenyakit, Info.kategori); //mendapat waktu service yang dibutuhkan
+	Info.prioritas = Prioritas(Info.jumlahPenyakit, Info.kategori); //mendapat nilai prioritas
 	
 	//mengurutkan antrian baru berdasarkan prioritas atau waktu datang
 	UrutAntrian(Q, Info);
@@ -315,214 +260,118 @@ void DaftarAntrian (Queue *Q){
 /* Memasukkan info penyakit dari hewan sesuai jumlah penyakit.
    I.S. info penyakit masih kosong.
    F.S. info penyakit sudah terisi.
+   Author : Syahda Afia.
 */ 
 void InputPenyakit (int JumlahPenyakit, infotype *x){
 	//deklarasi
 	Sakit sakit;
 	
 	//algoritma
-	if (JumlahPenyakit == 3){
+	if (JumlahPenyakit == 3){ //menerima 3 input penyakit yang dialami hewan
 		printf ("Penyakit 1	: "); scanf("%s", &sakit.penyakit1); fflush(stdin);
 		printf ("Penyakit 2	: "); scanf("%s", &sakit.penyakit2); fflush(stdin);
 		printf ("Penyakit 3	: "); scanf("%s", &sakit.penyakit3); fflush(stdin);
-	}else if (JumlahPenyakit == 2){
+	}else if (JumlahPenyakit == 2){ //menerima 2 input penyakit yang dialami hewan
 		printf ("Penyakit 1	: "); scanf("%s", &sakit.penyakit1); fflush(stdin);
 		printf ("Penyakit 2	: "); scanf("%s", &sakit.penyakit2); fflush(stdin);
-	}else if (JumlahPenyakit == 1){
+	}else if (JumlahPenyakit == 1){ //menerima 1 input penyakit yang dialami hewan
 		printf ("Penyakit 1	: "); scanf("%s", &sakit.penyakit1); fflush(stdin);
 	}
 	
-	(*x).penyakit = sakit;
+	(*x).penyakit = sakit; //mengisi info penyakit dengan nama penyakit yang sudah diinputkan
 }
 
 /* Menampilkan info pelanggan vet service.
    I.S. info pelanggan vet service belum ditampilkan.
    F.S. info pelanggan vet service sudah ditampilkan.
+   Author : Syahda Afia.
 */ 
-void PrintAntrian (Queue Q){
+void LihatAntrian (Queue Q){
 	//deklarasi
 	addrNQ temp;
 	int i;
 	
 	//algoritma
-	system ("cls");
-	printf ("===========================================\n");
-	printf ("||      APLIKASI LAYANAN DOKTER HEWAN    ||\n");
-	printf ("||           --DAFTAR ANTRIAN--          ||\n");
-	printf ("===========================================\n");
-	
+	PrintMenuLihatAntrian();
 	temp = Q.front;
 	i=0;
 	
-	if (temp == NULL){
+	if (temp == NULL){ //jika antrian kosong
 		printf ("Antrian Masih Kosong\n\n");
 	}
 	
-	while (temp != NULL){
-		printf("%d\n", ++i); //print nomor antrian
-		printf ("Nama Hewan		: %s\n", temp->info.nama);
-		printf ("Waktu Kedatangan	: %d\n", temp->info.WDatang);
+	while (temp != NULL){ //print info pelanggan selama antrian tidak kosong
+		printf("%d\n", ++i); //menampilkan nomor antrian
+		printf ("Nama Hewan		: %s\n", temp->info.nama); //menampilkan nama hewan 
+		printf ("Waktu Kedatangan	: %d\n", temp->info.WDatang); //menampilkan waktu kedatangan
+		PrintPenyakit(temp); //menampilkan penyakit yang dialami hewan
+		printf ("Kategori Penyakit	: %s\n", temp->info.kategori); //menampilkan kategori penyakit
+		printf ("Waktu Pelayanan		: %d\n", temp->info.WService); //menampilkan nomor antrian
+		printf ("Waktu Tunggu		: %d\n", temp->info.WTunggu); //menampilkan waktu service
+		printf ("Waktu Mulai		: %d\n", temp->info.WMulai); //menampilkan waktu mulai
+		printf ("Waktu Selesai		: %d\n\n\n", temp->info.WSelesai); //menampilkan waktu selesai
 		
-		//print penyakit sesuai jumlah penyakit
-		if (temp->info.jumlahPenyakit==3){
-			printf ("Penyakit		: %s - %s - %s\n", temp->info.penyakit.penyakit1, 
-			temp->info.penyakit.penyakit2, temp->info.penyakit.penyakit3);
-		} else if (temp->info.jumlahPenyakit==2){
-				printf ("Penyakit		: %s - %s\n", temp->info.penyakit.penyakit1, 
-				temp->info.penyakit.penyakit2);
-		} else if (temp->info.jumlahPenyakit==1){
-				printf ("Penyakit		: %s\n", temp->info.penyakit.penyakit1);
-		}
-		
-		printf ("Kategori Penyakit	: %s\n", temp->info.kategori);
-		printf ("Waktu Pelayanan		: %d\n", temp->info.WService);
-		printf ("Waktu Tunggu		: %d\n", temp->info.WTunggu);
-		printf ("Waktu Mulai		: %d\n", temp->info.WMulai);
-		printf ("Waktu Selesai		: %d\n\n\n", temp->info.WSelesai);
-		temp=(*temp).next;
+		temp=(*temp).next; //pindah ke pelanggan selanjutnya
 	}
 }
 
 /* Mengembalikan kategori penyakit dari 
    penyakit-penyakit yang diinputkan.
+   Author : Syahda Afia.
 */
 char* KategoriPenyakit (Sakit sakit){
 	//algoritma
-	//mengecek apakah ada penyakit tertentu di dalam penyakit pelanggan
+	//mengecek apakah ada penyakit ringan di dalam penyakit yang diinput pelanggan
 	char *PenyakitRingan = "kutu bersin demam";
 	char *Ringan = sakit.penyakit1;
 	char *kategori1 = strstr(PenyakitRingan, Ringan);
 	
+	//mengecek apakah ada penyakit sedang di dalam penyakit yang diinput pelanggan
 	char *PenyakitSedang = "cacingan diare rabies";
 	char *Sedang = sakit.penyakit1;
 	char *kategori2 = strstr(PenyakitSedang, Sedang);
-	
+			
+	//mengecek apakah ada penyakit berat di dalam penyakit yang diinput pelanggan
 	char *PenyakitBerat = "radang infeksi kuning";
 	char *Berat = sakit.penyakit1;
 	char *kategori3 = strstr(PenyakitBerat, Berat);
 	
 	//mengambilkan jenis kategori penyakit sesuai penyakit yang dialami
-	if(kategori1){
+	if(kategori1){ //jika ada penyakit ringan
 	    return "Ringan";
-	}else if (kategori2){
+	}else if (kategori2){ //jika ada penyakit sedang
 		return "Sedang";
-	}else if (kategori3){
+	}else if (kategori3){ //jika ada penyakit berat
 		return "Berat";
 	}
 }
 
 /* Mengembalikan nilai prioritas berdasarkan 
    parameter prioritas.
+   Author : Syahda Afia.
 */
 int Prioritas (int JumlahPenyakit, char Kategori[]){
 	//algoritma
-	if(strcmp(Kategori, "Ringan") == 0){
+	if(strcmp(Kategori, "Ringan") == 0){ //jika minimal ada 3 penyakit ringan
 		if (JumlahPenyakit>=3){
 			return 2;
 		}
-	}else if(strcmp(Kategori, "Sedang") == 0){
+	}else if(strcmp(Kategori, "Sedang") == 0){ //jika minimal ada 2 penyakit sedang
 		if (JumlahPenyakit>=2){
 			return 3;
 		}
-	}else if(strcmp(Kategori, "Berat") == 0){
+	}else if(strcmp(Kategori, "Berat") == 0){ //jika minimal ada 1 penyakit berat
 		if (JumlahPenyakit>=1){
 			return 4;
 		}
-	}else return 1;
-}
-
-/* Megurutkan daftar antrian sesuai waktu dan prioritas
-   I.S. Antrian belum terurut.
-   F.S. Antrian sudah terurut.
-*/
-void UrutAntrian (Queue *Q, infotype Info){
-	//deklarasi
-	addrNQ NewNode, x;
-	int swap = 0;
-	
-	//algoritma
-	NewNode = Alokasi(Info);
-	x = (*Q).front;
-	
-	//jika antrian tidak kosong dan belum ditukar maka dicek dulu
-	while (x != NULL && swap != 1){ 
-		if (Info.prioritas > x->info.prioritas){
-			if (Info.WDatang < x->info.WMulai){
-				UbahAntrian (Q, NewNode, x);
-				swap=1;
-			}else x = (*x).next;
-		}else if (Info.prioritas == x->info.prioritas){
-			if (Info.WDatang < x->info.WMulai){
-				if (Info.WDatang < x->info.WDatang){
-					UbahAntrian (Q, NewNode, x);
-					swap=1;	
-				}else x = (*x).next;
-			}else x = (*x).next;
-		}else x = (*x).next;	
-	}
-	
-	/*jika antrian kosong atau nilai prioritasnya tidak lebih besar 
-	dari antrian yang ada maka langsung masuk ke antrian*/
-	if(x == NULL){	
-		Info.WTunggu = HitungWaktuTunggu1 ((*Q).rear, Info.WDatang);
-		Info.WMulai = HitungWaktuMulai((*Q).rear, Info.WDatang);
-		Info.WSelesai = HitungWaktuSelesai (Info);
-		MasukAntrian (Q, Info);
-	}	
-}
-
-/* Mengubah urutan antrian apabila ada antrian yang diprioritaskan
-   I.S. Antrian belum diubah.
-   F.S. Antrian sudah diubah.
-*/
-void UbahAntrian (Queue *Q, addrNQ NewNode, addrNQ x){
-	//deklarasi
-	addrNQ temp; //pointer untuk menunjuk ke node sebelum node x
-	int done;
-	
-	//algoritma
-	temp = (*Q).front;
-	
-	//jika node yang akan didahului adalah node pertama
-	if (x == (*Q).front){
-		(*NewNode).next = x;
-		(*Q).front = NewNode;
-	}
-
-	else {
-		//agar temp menunjuk ke node sebelum node x
-		while ((*temp).next != x){
-			temp = (*temp).next;
-		}
-		(*temp).next = NewNode;
-		(*NewNode).next= x;	
-	} 
-
-	//menghitung ulang waktu pelayanan setelah terjadi pengubahan antrian
-	while (NewNode != NULL ){
-		if (NewNode == (*Q).front && done !=1){
-			temp = (*Q).front;
-			NewNode->info.WTunggu = 0;
-			NewNode->info.WMulai = NewNode->info.WDatang;
-			NewNode->info.WSelesai = HitungWaktuSelesai (NewNode->info);
-			NewNode = (*NewNode).next;
-			done = 1;
-		}
-		else {
-			NewNode->info.WTunggu = HitungWaktuTunggu2 (temp, NewNode->info.WDatang);
-			NewNode->info.WMulai = temp->info.WSelesai;
-			NewNode->info.WSelesai = HitungWaktuSelesai (NewNode->info);
-			NewNode = (*NewNode).next;
-			temp =(*temp).next;
-		}
-	}
+	}else return 1; //selain dari ketiga kondisi sebelumnya
 }
 
 /* Menampilkan tata cara penggunaan aplikasi.
    I.S. Layar kosong.
    F.S. Tampilan tata cara penggunaan aplikasi.
-   author 		: M.Fauzi 
-   modifikasi	: Syahda Afia
+   author 		: M.Fauzi.
+   modifikasi	: Syahda Afia.
 */
 void HowToUse (){
 	//deklarasi
@@ -531,16 +380,79 @@ void HowToUse (){
 	
 	//algoritma
 	system("cls");
-	fp = fopen(HOW_TO_USE, "r");
+	fp = fopen(HOW_TO_USE, "r"); //membaca file how to use
 	
-	if(fp != NULL)
-	{
-		while(!feof(fp)){
+	if(fp != NULL){ //jika file ditemukan
+		while(!feof(fp)){ //menampilkan text pada file ke layar selama pointer belum menunjuk ke akhir text
 			c = fgetc(fp);
-			printf("%c", c); //menampilkan text pada file ke layar
+			printf("%c", c); 
 		}
-		fclose(fp);
-	}else if(fp == NULL){
+		fclose(fp); //menutup file how to use
+	}else if(fp == NULL){ //jika file tidak ditemukan
 		printf("Unable To Create the file \n\n");
 	}
+}
+
+
+/*** MANAJEMEN WAKTU ***/
+/* Menghitung waktu service.
+   Mengembalikan waktu service sesuai dengan kategori penyakit.
+   Author : Syahda Afia.
+*/
+int HitungWaktuService (int jumlahPenyakit, char kategori[]){
+	//algoritma
+	//membandingkan kata, jika sama maka mengembalikan waktu service
+	if(strcmp(kategori, "Ringan") == 0){ //waktu service untuk kategori ringan
+		return jumlahPenyakit*15;
+	}else if(strcmp(kategori, "Sedang") == 0){ //waktu service untuk kategori sedang
+		return jumlahPenyakit*30;
+	}else if(strcmp(kategori, "Berat") == 0){ //waktu service untuk kategori berat
+		return jumlahPenyakit*45;
+	}
+}
+
+/* Menghitung waktu tunggu layanan apabila tidak ada pertukaran antrian.
+   Mengembalikan hasil dari WSelesai (rear)- WDaftar.
+   Author : Syahda Afia
+*/
+int HitungWaktuTunggu1(addrNQ rear, int WDaftar){
+	//algoritma
+	if(rear == NULL){ //jika antrian kosong
+		return 0;
+	}else if(WDaftar < rear->info.WSelesai){ //jika antrian baru datang sebelum antrian sebelumnya selesai
+		return rear->info.WSelesai-WDaftar;
+	}else{ //jika antrian baru datang setelah antrian sebelumnya selesai
+		return 0;
+	}
+}
+
+/* Menghitung waktu tunggu layanan apabila ada pertukaran antrian.
+   Mengembalikan hasil dari WSelesai (Node sebelumnya)- WDaftar.
+   Author : Syahda Afia
+*/
+int HitungWaktuTunggu2 (addrNQ temp, int WDaftar){
+	//algoritma
+	if (WDaftar < temp->info.WSelesai){ //jika antrian baru datang sebelum antrian sebelumnya selesai
+		return temp->info.WSelesai-WDaftar;
+	}else return 0; //jika antrian baru datang setelah antrian sebelumnya selesai
+}
+
+/* Menghitung waktu mulai layanan.
+   Mengembalikan hasil dari Waktu Daftar atau Waktu Selesai node sebelumnya
+   Author : syahda Afia
+*/
+int HitungWaktuMulai (addrNQ rear, int WDaftar){
+	//algoritma
+	if(rear == NULL || WDaftar > rear->info.WSelesai){ //jika antrian kosong atau jika antrian baru datang setelah antrian sebelumnya selesai
+		return WDaftar;
+	}else return rear->info.WSelesai; //jika antrian baru datang sebelum antrian sebelumnya selesai
+}
+
+/* Menghitung waktu selesai layanan. 
+   Mengembalikan hasil dari WMulai + WService.
+   Author : Syahda Afia.
+*/
+int HitungWaktuSelesai (infotype data){
+	//algoritma
+	return data.WMulai + data.WService; //waktu selesai = waktu mulai + waktu service
 }
